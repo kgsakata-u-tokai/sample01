@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>三目並べ</title>
+</head>
+<body>
+<h1>三目並べ</h1>
+<canvas id="canvas"></canvas>
+
+<script>
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
+canvas.width = 400;
+canvas.height = 400;
+let hit = 0;
+
+// Board drawing
+let w = 300, h = 300;  // Board size
+let x0 = 50, y0 = 50;  // Board offset
+let step = 3;  // number of division
+ctx.beginPath();
+for (i = 0; i <= step; i++) {
+    // Vertical line
+    ctx.moveTo(x0 + w / step * i, y0); ctx.lineTo(x0 + w / step * i, y0 + h);
+    // Horizontal line
+    ctx.moveTo(x0, y0 + h / step * i); ctx.lineTo(x0 + w, y0 + h / step * i);
+}
+ctx.stroke();
+
+function onClick(e) {
+    let rect = e.target.getBoundingClientRect();
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+
+    if (hit % 2 == 0) {
+        ctx.fillStyle = "#ffffff";
+        ctx.lineStyle = "#ffffff";
+    } else {
+        ctx.fillStyle = "#000000";
+        ctx.lineStyle = "#000000";
+    }
+	ctx.beginPath();
+	ctx.arc(x, y, w/step*0.4, 0, 2 * Math.PI, false);
+    ctx.closePath();
+    ctx.fill();
+	ctx.stroke();
+
+    hit++;
+}
+
+canvas.addEventListener('click', onClick, false);
+
+</script>
+
+</body>
+</html>
